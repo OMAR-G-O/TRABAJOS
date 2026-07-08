@@ -1,0 +1,51 @@
+package org.example.dao;
+
+import org.example.config.Conexion;
+import org.example.modelo.Profesor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class ProfesorDao {
+    public boolean nuevoProfesor(Profesor profesor) {
+        boolean registrado = false;
+
+        String sql = "INSERT INTO maestros VALUES(?,?,?,?,?)";
+
+        try (Connection conexion = Conexion.conectar();
+             PreparedStatement stm = conexion.prepareStatement(sql);) {
+            stm.setInt(1, profesor.getNumEmpleado());
+            stm.setString(2, profesor.getPuesto());
+            stm.setString(3, profesor.getNombre());
+            stm.setInt(4, profesor.getEdad());
+            stm.setString(5, profesor.getCedulaProfesional());
+            stm.executeUpdate();
+        } catch (SQLException err) {
+            System.out.println("Error al agregar Maestro" + err.getMessage());
+        }
+        return registrado;
+    }
+
+    public ArrayList<Profesor> extraerProfesores() {
+        ArrayList<Profesor> profesoresBD = new ArrayList<Profesor>();
+        String sql = "SELECT * FROM maestros";
+        try (Connection conexion = Conexion.conectar();
+             PreparedStatement stm = conexion.prepareStatement(sql);
+             ResultSet rs = stm.executeQuery()) {
+            while (rs.next()) {
+                Profesor profesor = new Profesor();
+                profesor.setNumEmpleado(rs.getInt("numEmpleado"));
+                profesor.setPuesto(rs.getString("puesto"));
+                profesor.setNombre(rs.getString("nombre"));
+                profesor.setEdad(rs.getInt("edad"));
+                profesor.setCedulaProfesional(rs.getString("cedulaProfesional"));
+                profesoresBD.add(profesor);
+            }
+        } catch (SQLException err) {
+            System.out.println("Error al extraer los Datos: " + err.getMessage());
+        }
+        return profesoresBD;
+    }
+}
