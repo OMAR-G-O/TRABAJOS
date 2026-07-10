@@ -4,11 +4,11 @@ public class Profesor {
     private String nombre;
     private int edad;
     private int numEmpleado;
-    private String cedulaProfesional;
+    private int cedulaProfesional;
     private String puesto;
     private static final String[] PUESTOS_VALIDOS = {"GERENTE", "DOCENTE", "TUTOR", "DIRECTOR", "RECTOR"};
 
-    public Profesor(String nombre, int edad, int numEmpleado, String cedulaProfesional,  String puesto) {
+    public Profesor(String nombre, int edad, int numEmpleado, int cedulaProfesional,  String puesto) {
         setNombre(nombre);
         setEdad(edad);
         setNumEmpleado(numEmpleado);
@@ -52,11 +52,11 @@ public class Profesor {
         else System.out.println("Ingresa una numEmpleado correcta ");
     }
 
-    public String getCedulaProfesional() {
+    public int getCedulaProfesional() {
         return cedulaProfesional;
     }
 
-    public void setCedulaProfesional(String cedulaProfesional) {
+    public void setCedulaProfesional(int cedulaProfesional) {
         this.cedulaProfesional = cedulaProfesional;
     }
 

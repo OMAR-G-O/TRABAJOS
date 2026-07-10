@@ -81,8 +81,8 @@ public class Menu {
         profesor.setNombre(leer.readLine());
         System.out.println("Ingresa el edad del empleado: ");
         profesor.setEdad(Integer.parseInt(leer.readLine()));
-        System.out.println("Ingresa el cedula del empleado: ");
-        profesor.setCedulaProfesional(leer.readLine());
+        System.out.println("Ingresa la cedula del Profesor: ");
+        profesor.setCedulaProfesional(Integer.parseInt(leer.readLine()));
         profesorDao.nuevoProfesor(profesor);
     }
     public static void mostrarMaestros()throws IOException{
@@ -93,7 +93,20 @@ public class Menu {
         }
     }
     public static void eliminarMaestros()throws IOException{}
-    public static void modificarMaestros()throws IOException{}
+    public static void modificarMaestros()throws IOException{
+        System.out.println("-------- Modificar Profesor por numero de cédula --------");
+        System.out.println("Ingresa el numero de cedula del Profesor: ");
+        profesor.setCedulaProfesional(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa el numero de empleado del profesor: ");
+        profesor.setNumEmpleado(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa el nombre del profesor: ");
+        profesor.setNombre(leer.readLine());
+        System.out.println("Ingresa la edad del profesor: ");
+        profesor.setEdad(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa el puesto del profesor: ");
+        profesor.setPuesto(leer.readLine());
+        profesorDao.actualizarProfesor(profesor);
+    }
     public static void buscarMaestro()throws IOException{}
 
     public static void menu() throws IOException {
