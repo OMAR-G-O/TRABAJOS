@@ -71,6 +71,20 @@ public class ProfesorDao {
             System.out.println("Error al actualizar Profesor" + err.getMessage());
         }
         return actualizado;
+    }
 
+    public boolean eliminarProfesor(Profesor profesor){
+        boolean eliminado = false;
+        String sql = "DELETE FROM maestros WHERE numEmpleado = ?";
+        try(Connection conexion = Conexion.conectar();
+            PreparedStatement stm = conexion.prepareStatement(sql);) {
+            stm.setInt(1, profesor.getNumEmpleado());
+            stm.executeUpdate();
+            System.out.println("Profesor eliminado correctamente");
+        }
+        catch(SQLException err){
+            System.out.println("Error al eliminar Profesor" + err.getMessage());
+        }
+        return eliminado;
     }
 }

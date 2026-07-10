@@ -92,7 +92,12 @@ public class Menu {
             System.out.println(profesor);
         }
     }
-    public static void eliminarMaestros()throws IOException{}
+    public static void eliminarMaestros()throws IOException{
+        System.out.println("----------------- Eliminar profesor -------------");
+        System.out.println("Ingresa el numero de empleado: ");
+        profesor.setNumEmpleado(Integer.parseInt(leer.readLine()));
+        profesorDao.eliminarProfesor(profesor);
+    }
     public static void modificarMaestros()throws IOException{
         System.out.println("-------- Modificar Profesor por numero de cédula --------");
         System.out.println("Ingresa el numero de cedula del Profesor: ");
