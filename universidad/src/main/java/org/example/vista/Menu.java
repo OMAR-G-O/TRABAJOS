@@ -112,7 +112,21 @@ public class Menu {
         profesor.setPuesto(leer.readLine());
         profesorDao.actualizarProfesor(profesor);
     }
-    public static void buscarMaestro()throws IOException{}
+    public static void buscarMaestro()throws IOException{
+
+        System.out.println("Buscar alumno por numero de empleado: ");
+        System.out.println("Numero de empleado: ");
+        profesor.setNumEmpleado(Integer.parseInt(leer.readLine()));
+        boolean encontrado = profesorDao.buscarProfesor(profesor);
+
+        if (encontrado) {
+            System.out.println("\n--- Datos del profesor encontrado ---");
+            System.out.println(profesor);
+        } else {
+            System.out.println("No se pudo mostrar el profesor porque no existe.");
+        }
+
+    }
 
     public static void menu() throws IOException {
         int salir = 0;

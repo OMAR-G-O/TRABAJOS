@@ -87,4 +87,34 @@ public class ProfesorDao {
         }
         return eliminado;
     }
+
+    public boolean buscarProfesor(Profesor profesor) {
+        boolean buscado = false;
+        String sql = "SELECT * FROM maestros WHERE numEmpleado = ?";
+
+        try (Connection conexion = Conexion.conectar();
+             PreparedStatement stm = conexion.prepareStatement(sql)) {
+
+            stm.setInt(1, profesor.getNumEmpleado());
+
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    profesor.setPuesto(rs.getString("puesto"));
+                    profesor.setNombre(rs.getString("nombre"));
+                    profesor.setEdad(rs.getInt("edad"));
+                    profesor.setCedulaProfesional(rs.getInt("cedulaProfesional"));
+
+                    buscado = true;
+                    System.out.println("Profesor buscado y cargado correctamente");
+                } else {
+                    System.out.println("No se encontró ningún profesor con ese número de empleado");
+                }
+            }
+        } catch (SQLException err) {
+            System.out.println("Error al buscar profesor: " + err.getMessage());
+        }
+
+        return buscado;
+    }
+
 }
