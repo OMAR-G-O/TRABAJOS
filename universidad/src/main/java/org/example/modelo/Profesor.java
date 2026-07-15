@@ -1,15 +1,17 @@
 package org.example.modelo;
 
-public class Profesor {
-    private String nombre;
+public class Profesor extends PersonaUT implements Ensenador, Evaluador {
     private int edad;
     private int numEmpleado;
     private int cedulaProfesional;
     private String puesto;
     private static final String[] PUESTOS_VALIDOS = {"GERENTE", "DOCENTE", "TUTOR", "DIRECTOR", "RECTOR"};
 
-    public Profesor(String nombre, int edad, int numEmpleado, int cedulaProfesional,  String puesto) {
-        setNombre(nombre);
+    public Profesor(String nombre, String curp) {
+        super(nombre, curp);
+    }
+
+    public Profesor( int edad, int numEmpleado, int cedulaProfesional,  String puesto) {
         setEdad(edad);
         setNumEmpleado(numEmpleado);
         setCedulaProfesional(cedulaProfesional);
@@ -18,15 +20,15 @@ public class Profesor {
 
     public Profesor() {}
 
-    public String getNombre() {
-        return nombre;
-    }
 
-    public void setNombre(String nombre) {
-        if (nombre.length() < 3 && nombre.isBlank()) {
-            System.out.println( "El nombre debe ser correcto");
-        }
-        else this.nombre = nombre;
+
+
+
+
+
+    @Override
+    public String mostrarTipoPersona() {
+        return "----- Profesor -----";
     }
 
 
@@ -66,12 +68,14 @@ public class Profesor {
 
     @Override
     public String toString() {
-        return "-----------   Profesor   -----------" +"\n"+
-                "nombre: " + nombre + '\n' +
-                "edad: " + edad + "\n"+
-                "numEmpleado: " + numEmpleado + "\n"+
-                "cedulaProfesional: " + cedulaProfesional + '\n'+
-                "puesto: " + puesto;
+        return  mostrarTipoPersona() +"\n"+
+                super.toString() +"\n"+
+                "edad: " + getEdad() + "\n"+
+                "numEmpleado: " + getNumEmpleado() + "\n"+
+                "cedulaProfesional: " + getCedulaProfesional() + '\n'+
+                "puesto: " + getPuesto() + "\n"+
+                 ensenar() + "\n"+
+                Evaluar();
     }
 
     public boolean validarPuestos(String puesto) {
@@ -82,5 +86,13 @@ public class Profesor {
             }
         }
         return puestoValido;
+    }
+    @Override
+    public String ensenar() {
+        return "El maestro "+getNombre()+" esta enseñando...";
+    }
+    @Override
+    public String Evaluar(){
+        return "El maestro "+getNombre()+" esta evaluando...";
     }
 }

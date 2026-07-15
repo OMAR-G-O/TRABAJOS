@@ -13,7 +13,7 @@ public class AlumnoDao {
     public boolean nuevoAlumno(Alumno alumno){
         boolean registrado = false;
 
-        String sql = "INSERT INTO alumnos VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO alumnos VALUES(?,?,?,?,?,?)";
 
         try(Connection conexion = Conexion.conectar();
             PreparedStatement stm = conexion.prepareStatement(sql);){
@@ -22,6 +22,7 @@ public class AlumnoDao {
             stm.setInt(3,alumno.getEdad());
             stm.setString(4,alumno.getCarrera());
             stm.setInt(5,alumno.getCuatrimestre());
+            stm.setString(6, alumno.getCurp());
             stm.executeUpdate();
             System.out.println("Alumno agregado correctamente");
         }
@@ -46,6 +47,7 @@ public class AlumnoDao {
                 alumno.setEdad(rs.getInt("edad"));
                 alumno.setCarrera(rs.getString("carrera"));
                 alumno.setCuatrimestre(rs.getInt("cuatrimestre"));
+                alumno.setCurp(rs.getString("curp"));
                 alumnosBD.add(alumno);
             }
         }
@@ -56,7 +58,7 @@ public class AlumnoDao {
     }
     public boolean actualizarAlumno(Alumno alumno){
         boolean actualizado = false;
-        String sql = "UPDATE alumnos SET nombre = ?, edad = ?, carrera = ?, cuatrimestre = ? WHERE numExpediente = ?";
+        String sql = "UPDATE alumnos SET nombre = ?, edad = ?, carrera = ?, cuatrimestre = ?, curp = ? WHERE numExpediente = ?";
         try(Connection conexion = Conexion.conectar();
             PreparedStatement stm = conexion.prepareStatement(sql);){
 
@@ -64,7 +66,9 @@ public class AlumnoDao {
             stm.setInt(2, alumno.getEdad());
             stm.setString(3, alumno.getCarrera());
             stm.setInt(4, alumno.getCuatrimestre());
-            stm.setInt(5, alumno.getNumExpediente());
+            stm.setString(5, alumno.getCurp());
+            stm.setInt(6, alumno.getNumExpediente());
+
             int registrosAfectado = stm.executeUpdate();
             if (registrosAfectado > 0) {
                 System.out.println("Alumno actualizado correctamente");
@@ -108,6 +112,7 @@ public class AlumnoDao {
                     alumno.setEdad(rs.getInt("edad"));
                     alumno.setCarrera(rs.getString("carrera"));
                     alumno.setCuatrimestre(rs.getInt("cuatrimestre"));
+                    alumno.setCurp(rs.getString("curp"));
 
                     buscado = true;
                     System.out.println("Alumno buscado y cargado correctamente");

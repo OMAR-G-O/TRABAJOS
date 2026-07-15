@@ -1,22 +1,28 @@
 package org.example.modelo;
 
-public class Alumno {
+import java.io.Serializable;
+
+public class Alumno extends PersonaUT implements Ensenable, Evaluable{
     private int numExpediente;
-    private String nombre;
     private int edad;
     private String carrera;
     private int cuatrimestre;
     private boolean registroCorrecto = false;
     private static final String[] CARRERAS_VALIDAS = {"DESARROLLO DE SOFTWARE", "MECATRÓNICA", "INDUSTRIAL", "MERCADOTECNIA"};
+
     public Alumno() {}
 
-    public Alumno(int numExpediente, String nombre, int edad, String carrera, int cuatrimestre) {
+    public Alumno(String nombre, String curp) {
+        super(nombre, curp);
+    }
+
+    public Alumno(int numExpediente, int edad, String carrera, int cuatrimestre) {
         setNumExpediente(numExpediente);
-        setNombre(nombre);
         setEdad(edad);
         setCarrera(carrera);
         setCuatrimestre(cuatrimestre);
     }
+
 
     public int getNumExpediente() {
         return numExpediente;
@@ -24,18 +30,6 @@ public class Alumno {
 
     public void setNumExpediente(int numExpediente) {
         this.numExpediente = numExpediente;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        if (nombre.isBlank() || nombre.length() < 3) {
-            System.out.println("El nombre debe ser correcto");
-
-        }
-        else this.nombre = nombre;
     }
 
     public int getEdad() {
@@ -81,11 +75,30 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return "-------  Alumno  -------" +"\n"+
+        return mostrarTipoPersona() +"\n"+
+                super.toString() +"\n"+
                 "numExpediente= " + getNumExpediente() +"\n"+
-                "nombre= " + getNombre() + '\n' +
                 "edad= " + getEdad() + "\n" +
                 "carrera= " + getCarrera() + '\n' +
-                "cuatrimestre= " + getCuatrimestre();
+                "cuatrimestre= " + getCuatrimestre()+"\n"+
+                aprender() + "\n" +
+                recibirEvaluacion()+ "\n"+
+                "--------------------------------------";
+
+    }
+
+    @Override
+    public String mostrarTipoPersona() {
+        return "----- Alumno -----";
+    }
+
+    @Override
+    public String aprender(){
+        return "El alumno "+ getNombre()+ "esta aprendiendo...";
+    }
+
+    @Override
+    public String recibirEvaluacion(){
+        return "El alumno "+getNombre()+ "esta evaluado...";
     }
 }

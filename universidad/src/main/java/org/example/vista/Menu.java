@@ -4,11 +4,9 @@ import org.example.dao.AlumnoDao;
 import org.example.dao.ProfesorDao;
 import org.example.modelo.Alumno;
 import org.example.modelo.Profesor;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Menu {
@@ -18,16 +16,18 @@ public class Menu {
     static Profesor profesor = new Profesor();
     static ProfesorDao profesorDao = new ProfesorDao();
     static public void inscribir() throws IOException{
-        System.out.print("Numero de expediente");
+        System.out.print("Numero de expediente: ");
         alumno.setNumExpediente(Integer.parseInt(leer.readLine()));
-        System.out.print("Nombre");
+        System.out.print("Nombre: ");
         alumno.setNombre(leer.readLine());
-        System.out.print("Edad");
+        System.out.print("Edad: ");
         alumno.setEdad(Integer.parseInt(leer.readLine()));
         System.out.print("Carrera (DESARROLLO DE SOFTWARE\", \"MECATRÓNICA\", \"INDUSTRIAL\", \"MERCADOTECNIA)");
         alumno.setCarrera(leer.readLine());
-        System.out.print("Cuatrimestre");
+        System.out.print("Cuatrimestre: ");
         alumno.setCuatrimestre(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa la curp del alumno: ");
+        alumno.setCurp(leer.readLine());
         alumnoDao.nuevoAlumno(alumno);
     }
     public static void mostrar(){
@@ -50,12 +50,14 @@ public class Menu {
         alumno.setCarrera(leer.readLine());
         System.out.println("Cuatrimestre: ");
         alumno.setCuatrimestre(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa la curp del alumno: ");
+        alumno.setCurp(leer.readLine());
         alumnoDao.actualizarAlumno(alumno);
 
     }
     public static void borrar()throws IOException{
         System.out.println("Borrar alumno");
-        System.out.println("Ingresa el numero de expediente");
+        System.out.println("Ingresa el numero de expediente: ");
         alumno.setNumExpediente(Integer.parseInt(leer.readLine()));
         alumnoDao.borrarAlumno(alumno);
     }
@@ -83,6 +85,8 @@ public class Menu {
         profesor.setEdad(Integer.parseInt(leer.readLine()));
         System.out.println("Ingresa la cedula del Profesor: ");
         profesor.setCedulaProfesional(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa la curp del Profesor: ");
+        profesor.setCurp(leer.readLine());
         profesorDao.nuevoProfesor(profesor);
     }
     public static void mostrarMaestros()throws IOException{
@@ -99,9 +103,8 @@ public class Menu {
         profesorDao.eliminarProfesor(profesor);
     }
     public static void modificarMaestros()throws IOException{
-        System.out.println("-------- Modificar Profesor por numero de cédula --------");
-        System.out.println("Ingresa el numero de cedula del Profesor: ");
-        profesor.setCedulaProfesional(Integer.parseInt(leer.readLine()));
+        System.out.println("-------- Modificar Profesor por numero de empleado --------");
+
         System.out.println("Ingresa el numero de empleado del profesor: ");
         profesor.setNumEmpleado(Integer.parseInt(leer.readLine()));
         System.out.println("Ingresa el nombre del profesor: ");
@@ -110,6 +113,10 @@ public class Menu {
         profesor.setEdad(Integer.parseInt(leer.readLine()));
         System.out.println("Ingresa el puesto del profesor: ");
         profesor.setPuesto(leer.readLine());
+        System.out.println("Ingresa la cedula del profesor del profesor: ");
+        profesor.setCedulaProfesional(Integer.parseInt(leer.readLine()));
+        System.out.println("Ingresa la curp del profesor: ");
+        profesor.setCurp(leer.readLine());
         profesorDao.actualizarProfesor(profesor);
     }
     public static void buscarMaestro()throws IOException{
@@ -127,37 +134,64 @@ public class Menu {
         }
 
     }
+    public static void mostrarComunidad()throws IOException{
+        mostrar();
+        mostrarMaestros();
+    }
 
     public static void menu() throws IOException {
         int salir = 0;
-        while (salir != 11){
-            System.out.println("1. Inscribir nuevo alumno");
-            System.out.println("2. Mostrar todos los alumnos");
-            System.out.println("3. Modificar un alumno");
-            System.out.println("4. Eliminar alumno");
-            System.out.println("5. Buscar alumno");
-            System.out.println("6. Insertar maestro");
-            System.out.println("7. mostrar todos los maestros");
-            System.out.println("8. Modificar maestro");
-            System.out.println("9. Eliminar maestro");
-            System.out.println("10. Buscar maestro");
-            System.out.println("11. Salir");
+        int opcion = 0;
+        while (salir != 4){
+            System.out.println("1. Gestionar Alumnos");
+            System.out.println("2. Gestionar Profesores");
+            System.out.println("3. Mostrar la Comunidad Estudiantil");
+            System.out.println("4. Salir");
+
             salir = Integer.parseInt(leer.readLine());
             switch (salir){
-                case 1: inscribir();break;
-                case 2: mostrar(); break;
-                case 3: modificar(); break;
-                case 4: borrar(); break;
-                case 5: buscar(); break;
-                case 6: insertarMaestro(); break;
-                case 7: mostrarMaestros(); break;
-                case 8: modificarMaestros(); break;
-                case 9: eliminarMaestros(); break;
-                case 10: buscarMaestro();  break;
-                case 11:
+                case 1: opcion = 0; while (opcion != 6){
+                    System.out.println("1. Inscribir nuevo alumno");
+                    System.out.println("2. Mostrar todos los alumnos");
+                    System.out.println("3. Modificar un alumno");
+                    System.out.println("4. Eliminar alumno");
+                    System.out.println("5. Buscar alumno");
+                    System.out.println("6. Salir");
+                    opcion = Integer.parseInt(leer.readLine());
+                    switch (opcion){
+                        case 1: inscribir();break;
+                        case 2: mostrar(); break;
+                        case 3: modificar(); break;
+                        case 4: borrar(); break;
+                        case 5: buscar(); break;
+                        case 6:
+                            System.out.println("Saliste de alumnos");break;
+                    }
+                }break;
+                case 2: opcion = 0; while (opcion != 6){
+                    System.out.println("1. Insertar maestro");
+                    System.out.println("2. mostrar todos los maestros");
+                    System.out.println("3. Modificar maestro");
+                    System.out.println("4. Eliminar maestro");
+                    System.out.println("5. Buscar maestro");
+                    System.out.println("6. Salir");
+                    opcion = Integer.parseInt(leer.readLine());
+                    switch (opcion){
+                        case 1: insertarMaestro(); break;
+                        case 2: mostrarMaestros(); break;
+                        case 3: modificarMaestros(); break;
+                        case 4: eliminarMaestros(); break;
+                        case 5: buscarMaestro();  break;
+                        case 6: System.out.println("Saliste de maestros");break;
+                    }
+                } break;
+
+                case 3: mostrarComunidad(); break;
+
+                case 4:
                     System.out.println("Adios"); break;
                 default:
-                    System.out.println("Incorrecta opcion");
+                    System.out.println("Opcion Incorrecta -.-");
             }
         }
     }

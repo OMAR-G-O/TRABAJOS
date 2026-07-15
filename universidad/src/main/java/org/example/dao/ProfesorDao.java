@@ -1,7 +1,6 @@
 package org.example.dao;
 
 import org.example.config.Conexion;
-import org.example.modelo.Alumno;
 import org.example.modelo.Profesor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ public class ProfesorDao {
     public boolean nuevoProfesor(Profesor profesor) {
         boolean registrado = false;
 
-        String sql = "INSERT INTO maestros VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO maestros VALUES(?,?,?,?,?,?)";
 
         try (Connection conexion = Conexion.conectar();
              PreparedStatement stm = conexion.prepareStatement(sql);) {
@@ -22,6 +21,7 @@ public class ProfesorDao {
             stm.setString(3, profesor.getNombre());
             stm.setInt(4, profesor.getEdad());
             stm.setInt(5, profesor.getCedulaProfesional());
+            stm.setString(6, profesor.getCurp());
             stm.executeUpdate();
         } catch (SQLException err) {
             System.out.println("Error al agregar Maestro" + err.getMessage());
@@ -42,6 +42,7 @@ public class ProfesorDao {
                 profesor.setNombre(rs.getString("nombre"));
                 profesor.setEdad(rs.getInt("edad"));
                 profesor.setCedulaProfesional(rs.getInt("cedulaProfesional"));
+                profesor.setCurp(rs.getString("curp"));
                 profesoresBD.add(profesor);
             }
         } catch (SQLException err) {
@@ -51,15 +52,18 @@ public class ProfesorDao {
     }
     public boolean actualizarProfesor(Profesor profesor){
         boolean actualizado = false;
-        String sql = "UPDATE maestros SET numEmpleado = ?, puesto = ?, nombre = ?, edad = ? WHERE cedulaProfesional = ?";
+        String sql = "UPDATE maestros SET puesto = ?, nombre = ?, edad = ?, cedulaProfesional = ?, curp= ? WHERE numEmpleado = ?";
         try(Connection conexion = Conexion.conectar();
             PreparedStatement stm = conexion.prepareStatement(sql);){
 
-            stm.setInt(1, profesor.getNumEmpleado());
-            stm.setString(2, profesor.getPuesto());
-            stm.setString(3, profesor.getNombre());
-            stm.setInt(4, profesor.getEdad());
-            stm.setInt(5, profesor.getCedulaProfesional());
+
+            stm.setString(1, profesor.getPuesto());
+            stm.setString(2, profesor.getNombre());
+            stm.setInt(3, profesor.getEdad());
+            stm.setInt(4, profesor.getCedulaProfesional());
+            stm.setString(5, profesor.getCurp());
+            stm.setInt(6, profesor.getNumEmpleado());
+
             int registrosAfectado = stm.executeUpdate();
             if (registrosAfectado > 0) {
                 System.out.println("Profesor actualizado correctamente");
@@ -103,6 +107,7 @@ public class ProfesorDao {
                     profesor.setNombre(rs.getString("nombre"));
                     profesor.setEdad(rs.getInt("edad"));
                     profesor.setCedulaProfesional(rs.getInt("cedulaProfesional"));
+                    profesor.setCurp(rs.getString("curp"));
 
                     buscado = true;
                     System.out.println("Profesor buscado y cargado correctamente");
